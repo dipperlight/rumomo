@@ -98,12 +98,12 @@
 	  	$cat.find("tr").each(function(idx){
 	  		var wtime=parseInt($(this).attr("date"));
 	  		if ($(this).hasClass('past')){prevTime=wtime;return true;}
-	   		var diff= prevTime ? Math.floor((wtime-prevTime)) : (1000 * 60*120);
+	   		var diff= prevTime ? Math.floor((wtime-prevTime)) : -1;
 	   		beatdiff+=diff;	   		
 	   		$(this).removeClass("sure");
 	   		$(this).removeClass("maybe");	  
 	   		$(this).find(".pop").text();
-	   		if (diff>=(1000 * 60*120) && wtime>beatTime+(1000*60*120)){
+	   		if (diff==-1 || diff>=(1000 * 60*120) && wtime>beatTime+(1000*60*120)){
 	   			$(this).addClass("sure");
 	   			$(this).find(".remain").text(Math.floor((wtime-now)/1000/60)+"分");
 	   			$(this).find(".pop").text("◎");
