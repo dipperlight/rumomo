@@ -1,1 +1,152 @@
-hello world
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>FF14 カニキャシスコレイ</title>
+  <link rel="stylesheet" href="t.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="weather.js"></script>
+</head>
+<body>
+  <div style="float: left;"> かにさん(パゴス：霧)<br> 前回討伐:<input class="beat" size="4"><input type="button" value="now" class="beatnow"><br>
+    <table border="1">
+      <thead>
+        <tr>
+          <td>開始</td>
+          <td>pop</td>
+          <td>あと</td>
+        </tr>
+      </thead>
+      <tbody id="kani"> </tbody>
+    </table>
+  </div>
+  <div style="float: left; margin-left: 2em; "> きゃしーさん(パゴス：吹雪)<br> 前回討伐:<input class="beat" size="4"><input type="button" value="now" class="beatnow"><br>
+    <table border="1">
+      <thead>
+        <tr>
+          <td>開始</td>
+          <td>pop</td>
+          <td>あと</td>
+        </tr>
+      </thead>
+      <tbody id="kya"> </tbody>
+    </table>
+  </div>
+  <div style="float: left; margin-left: 2em; "> すこるさん(ピューロス：吹雪)<br> 前回討伐:<input class="beat" size="4"><input type="button" value="now" class="beatnow"><br>
+    <table border="1">
+      <thead>
+        <tr>
+          <td>開始</td>
+          <td>pop</td>
+          <td>あと</td>
+        </tr>
+      </thead>
+      <tbody id="suko"> </tbody>
+    </table>
+  </div>
+  <div style="float: left; margin-left: 2em; "> れいあさん(ピューロス：灼熱波)<br> 前回討伐:<input class="beat" size="4"><input type="button" value="now" class="beatnow"><br>
+    <table border="1">
+      <thead>
+        <tr>
+          <td>開始</td>
+          <td>pop</td>
+          <td>あと</td>
+        </tr>
+      </thead>
+      <tbody id="rei"> </tbody>
+    </table>
+  </div>
+</body>
+<script>
+  $(function(){
+		wethercheckAll();
+  	  	timecheck();  
+  	  	popcheckAll();
+  	  	setInterval(function(){popcheckAll()}, 20000);
+  
+  	function timecheck(){
+	  	var now=new Date().getTime();
+	  	$("tr").each(function(idx){
+	  		var wtime=parseInt($(this).attr("date"));
+	  		$(this).removeClass("now");
+	  		if (wtime<now){
+	  			$(this).addClass("past");
+	  		}
+	  		if(wtime<now && now<(wtime+(8 * 175 * 1000))){
+	  			$(this).addClass("now");
+	  		}
+	  	});
+	}
+
+	function popcheckAll(){
+  	  	popcheck($("#kani"),$("#kanibeat").val());
+  	  	popcheck($("#kya"),$("#kyabeat").val());
+  	  	popcheck($("#suko"),$("#sukobeat").val());
+  	  	popcheck($("#rei"),$("#rei").val());
+  	}
+  	function wethercheckAll(){
+  	  	$("#kani").html(to_tr(searchWeather('Fog','Pagos')));
+  	  	$("#kya").html(to_tr(searchWeather('Blizzards','Pagos')));
+  	  	$("#suko").html(to_tr(searchWeather('Blizzard','Pyros')));
+  	  	$("#rei").html(to_tr(searchWeather('Heat Waves','Pyros')));
+  	}
+
+	function popcheck($cat,last){	
+	  	var now=new Date().getTime();
+	  	var prevTime;
+	  	var beatTime = parseInt($(this).parent().find(".beat").val()||now)
+	  	var beatdiff=0;
+	  	$cat.find("tr").each(function(idx){
+	  		var wtime=parseInt($(this).attr("date"));
+	  		if ($(this).hasClass('past')){prevTime=wtime;return true;}
+	   		var diff= prevTime ? Math.floor((wtime-prevTime)) : (1000 * 60*120);
+	   		beatdiff+=diff;	   		
+	   		$(this).removeClass("sure");
+	   		$(this).removeClass("maybe");	  
+	   		$(this).find(".pop").text();
+	   		if (diff>=(1000 * 60*120) && wtime>beatTime+(1000*60*120)){
+	   			$(this).addClass("sure");
+	   			$(this).find(".remain").text(Math.floor((wtime-now)/1000/60)+"分");
+	   			$(this).find(".pop").text("◎");
+	   			beatdiff=0;
+	   		}else if(diff>=(1000 * 60*110) || beatdiff>=1000*60*120) {
+	   			$(this).addClass("maybe"); 		   			
+	   			$(this).find(".remain").text(Math.floor((wtime-now)/1000/60)+"分");
+	   			$(this).find(".pop").text("？");
+	   			beatdiff=0;
+	   		}
+	   		prevTime=wtime;
+	  	});
+	}
+	function searchWeather(tWeather,zone) {
+	  	$("#"+tWeather).html('');
+	  	var now = new Date();
+	  	var startTime = new Date(now - (1000*60*60*2));
+
+	  	var weatherStartTime = WeatherFinder.getWeatherTimeFloor(new Date(now - (1000*60*60*2))).getTime(); //2時間前
+	  	var resultWeather=[];
+	  	for (i=0;i<50;i++) {
+	  		var weather = WeatherFinder.getWeather(weatherStartTime, zone);
+	  		if (weather.id == tWeather) {
+	  			resultWeather.push(weatherStartTime);
+	  		}
+	  		weatherStartTime += 8 * 175 * 1000; // Increment by 8 Eorzean hours
+	  	}
+	  	return resultWeather;
+	}
+	function to_tr(warr,type){
+		var html="";
+		var prevTime;
+		warr.forEach(function(wdate){
+			var date=new Date(wdate);
+			html+='<tr date="'+ date.getTime() +'"><td class="time">'+ ('0'+date.getHours()).slice(-2)+('0'+date.getMinutes()).slice(-2) +'</td><td class="pop"></td><td class="remain"></td></tr>';
+		});
+		return html;
+	}
+	$('.beatNow').on('click', function(){
+		var date = new Date();
+		var time =('0'+date.getHours()).slice(-2)+('0'+date.getMinutes()).slice(-2);
+		$(this).prev().val(time)
+		popcheck($(this).parent().find("tbody"),time);
+	});
+});
+</script>
