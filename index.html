@@ -11,7 +11,8 @@
     <table border="1">
       <thead>
         <tr>
-          <td>開始</td>
+          <td>LT</td>
+          <td>ET</td>
           <td>アネモス　</td>
           <td>　パゴス　</td>
           <td>ピューロス</td>
@@ -58,8 +59,8 @@
     var html = "";
     resultWeather.forEach(function (weather) {
       var date = new Date(weather[0]);
-      html += '<tr date="' + date.getTime() + '"><td class="time">'
-       + ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2)
+      html += '<tr date="' + date.getTime() + '"><td class="ET">'+ ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) +'</td><td class="LT">'
+       + WeatherFinder.getEorzeaHour(date.getTime())
        + '</td><td class="anemos '  + weather[1] + '">' + weather[1]
        + '</td><td class="pagos '   + weather[2] + '">' + weather[2]
        + '</td><td class="pyros '   + weather[3] + '">' + weather[3]
