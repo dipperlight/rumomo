@@ -1,12 +1,28 @@
+.brimayno {
+background-color: #afeeee;
+}
+.brimaybe {
+background-color: #87ceeb;
+}
+.brisure {
+background-color: #1e90ff;
+font-weight: bold;
+}
+
+.fogmayno {
+background-color: #d8bfd8;
+}
+.fogmaybe {
+background-color: #ee82ee;
+}
+.fogsure {
+background-color: #ff00ff;
+font-weight: bold;
+}
+
 .past {
 background-color: #c0c0c0;
 }
 .now {
-background-color: #fffacd;
-}
-.maybe {
-background-color: #e6e6fa;
-}
-.sure {
-background-color: #87ceeb;
+background-color: #fa8072;
 }
