@@ -12,16 +12,18 @@
       <thead>
         <tr>
           <td>開始</td>
-          <td>パゴス</td>
-          <td>ピュロス</td>
-          <td>あと</td>
+          <td>アネモス　</td>
+          <td>　パゴス　</td>
+          <td>ピューロス</td>
+          <td>ヒュダトス</td>
+          <td>差</td>
         </tr>
       </thead>
       <tbody id="result"> </tbody>
     </table>
   </div>
   <div style="float: left;margin-left: 30">
-    吹雪と霧のみ色強調<br>
+    カニ・キャシー・スコルのみ色強調<br>
     <span class="brisure">濃い</span><span class="fogsure">色</span>は前回の同天候から120分以上経過、ほぼ確実に湧く時間<br>
     <span style="background-color: #87ceeb">中間</span><span style="background-color: #ee82ee">色</span>は最短で倒された場合に湧く予定の時間<br>
     <span style="background-color: #afeeee">薄い</span><span style="background-color: #d8bfd8">色</span>は天候は合うが推定湧かない時間<br>
@@ -37,18 +39,32 @@
 
   function wethers() {
     var now = new Date();
-    var weatherStartTime = WeatherFinder.getWeatherTimeFloor(new Date(now - (1000 * 60 * 60 * 3))).getTime();
+    var weatherStartTime = WeatherFinder.getWeatherTimeFloor(new Date(now - (1000 * 60 * 60 * 2.5))).getTime();
     var resultWeather = [];
     for (i = 0; i < 50; i++) {
-      var pagosweather = WeatherFinder.getWeather(weatherStartTime, 'Pagos');
-      var pyrosweather = WeatherFinder.getWeather(weatherStartTime, 'Pyros');
-      resultWeather.push([weatherStartTime, pagosweather.name, pyrosweather.name]);
+      var aqnemosweather = WeatherFinder.getWeather(weatherStartTime, 'Anemos');
+      var pagosweather   = WeatherFinder.getWeather(weatherStartTime, 'Pagos');
+      var pyrosweather   = WeatherFinder.getWeather(weatherStartTime, 'Pyros');
+      var hydatosweather = WeatherFinder.getWeather(weatherStartTime, 'Hydatos');
+      resultWeather.push([
+      	weatherStartTime,
+      	aqnemosweather.name,
+      	pagosweather.name,
+      	pyrosweather.name,
+      	hydatosweather.name
+      ]);
       weatherStartTime += 8 * 175 * 1000; // Increment by 8 Eorzean hours
     }
     var html = "";
     resultWeather.forEach(function (weather) {
       var date = new Date(weather[0]);
-      html += '<tr date="' + date.getTime() + '"><td class="time">' + ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) + '</td><td class="pagos ' + weather[1] + '">' + weather[1] + '</td><td class="pyros ' + weather[2] + '">' + weather[2] + '</td><td class="remain"></td></tr>';
+      html += '<tr date="' + date.getTime() + '"><td class="time">'
+       + ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2)
+       + '</td><td class="anemos '  + weather[1] + '">' + weather[1]
+       + '</td><td class="pagos '   + weather[2] + '">' + weather[2]
+       + '</td><td class="pyros '   + weather[3] + '">' + weather[3]
+       + '</td><td class="hydatos ' + weather[4] + '">' + weather[4]
+       + '</td><td class="remain"></td></tr>';
     });
     $("#result").html(html);
   }
@@ -120,10 +136,9 @@
         py_bri_diff = 0
       }
       py_bri_diff++;
-      py_bri_maydiff++;
-      if ($(this).hasClass("ck")) {        
-        $(this).children(".remain").text(Math.floor((wtime - now) / 1000 / 60) + "分");
-      }
+      py_bri_maydiff++;   
+
+      $(this).children(".remain").text(Math.floor((wtime - now) / 1000 / 60) + "分");
     });
   }
 
