@@ -25,9 +25,9 @@
   <div style="float: left;margin-left: 30">
     カニ・キャシー・スコルのみ色強調<br>
     <span class="brisure">濃い</span><span class="fogsure">色</span>は前回の同天候から120分以上経過、ほぼ確実に湧く時間<br>
-    <span style="background-color: #87ceeb">中間</span><span style="background-color: #ee82ee">色</span>は最短で倒された場合に湧く予定の時間<br>
-    <span style="background-color: #afeeee">薄い</span><span style="background-color: #d8bfd8">色</span>は天候は合うが推定湧かない時間<br>
-    確定以外は新島の場合にズレる注意
+    <span class="brimaybe">中間</span><span class="fogmaybe">色</span>は最短で倒された場合に湧く予定の時間、
+    新島や放置でズレる注意<br>
+    <span class="brimayno">薄い</span><span class="fogmayno">色</span>は湧くか不明の時間
   </div>
 </body>
 <script >$(function () {
@@ -116,10 +116,6 @@
         }
         pa_bri_diff = 0
       }
-      pa_fog_diff++;
-      pa_fog_maydiff++;
-      pa_bri_diff++;
-      pa_bri_maydiff++;
       var $pyros = $(this).children(".pyros");
       if ($pyros.hasClass('吹雪')) {
         if (py_bri_diff >= 6) {
@@ -135,6 +131,11 @@
         }
         py_bri_diff = 0
       }
+
+      pa_fog_diff++;
+      pa_fog_maydiff++;
+      pa_bri_diff++;
+      pa_bri_maydiff++;
       py_bri_diff++;
       py_bri_maydiff++;   
 
