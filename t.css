@@ -1,35 +1,93 @@
-.brimayno {
-background-color: #afeeee;
+.blimayno {
+background-color: #afeeee !important;
 }
-.brimaybe {
-background-color: #87ceeb;
+.blimaybe {
+background-color: #87ceeb !important;
 }
-.brisure {
-background-color: #1e90ff;
+.blisure {
+background-color: #1e90ff !important;
 font-weight: bold;
 }
 
 .fogmayno {
-background-color: #d8bfd8;
+background-color: #d8bfd8 !important;
 }
 .fogmaybe {
-background-color: #ee82ee;
+background-color: #ee82ee !important;
 }
 .fogsure {
-background-color: #ff00ff;
+background-color: #ff00ff !important;
 font-weight: bold;
 }
 
 .past {
-background-color: #c0c0c0 !important;
+background-color: #c0c0c0;
 }
 .now {
-background-color: #fa8072 !important;
+background-color: #fa8072;
 }
 .ck{
 background-color: #ecc;
 }
 
 td {
+	height: 32px;
 	text-align: center;
+}
+
+
+
+.吹雪{
+    padding-left: 30px;
+    background: url(./icon/Blizzards.png) no-repeat;
+}
+.晴れ{
+    padding-left: 30px;
+    background: url(./icon/Fair_Skies.png) no-repeat;
+
+}
+.霧{
+    padding-left: 30px;
+    background: url(./icon/Fog.png) no-repeat;
+
+}
+.暴風{
+    padding-left: 30px;
+    background: url(./icon/Gales.png) no-repeat;
+
+}
+.妖霧{
+    padding-left: 30px;
+    background: url(./icon/Gloom.png) no-repeat;
+
+}
+.灼熱波{
+    padding-left: 30px;
+    background: url(./icon/Heat_Waves.png) no-repeat;
+
+}
+.暴雨{
+    padding-left: 30px;
+    background: url(./icon/Showers.png) no-repeat;
+
+}
+.雪{
+    padding-left: 30px;
+    background: url(./icon/Snow.png) no-repeat;
+
+}
+.雷{
+    padding-left: 30px;
+    background: url(./icon/Thunder.png) no-repeat;
+
+}
+.雷雨{
+    padding-left: 30px;
+    background: url(./icon/Thunderstorms.png) no-repeat;
+
+}
+.霊風{
+    padding-left: 30px;
+    background: url(./icon/Umbral_Wind.png) no-repeat;
+
 }

@@ -25,10 +25,10 @@
   </div>
   <div style="float: left;margin-left: 30">
     カニ・キャシー・スコルのみ色強調<br>
-    <span class="brisure">濃い</span><span class="fogsure">色</span>は前回の同天候から120分以上経過、ほぼ確実に湧く時間<br>
-    <span class="brimaybe">中間</span><span class="fogmaybe">色</span>は最短で倒された場合に湧く予定の時間、
+    <span class="blisure">濃い</span><span class="fogsure">色</span>は前回の同天候から120分以上経過、ほぼ確実に湧く時間<br>
+    <span class="blimaybe">中間</span><span class="fogmaybe">色</span>は最短で倒された場合に湧く予定の時間、
     新島や放置でズレる注意<br>
-    <span class="brimayno">薄い</span><span class="fogmayno">色</span>は湧くか不明の時間
+    <span class="blimayno">薄い</span><span class="fogmayno">色</span>は湧くか不明の時間
   </div>
 </body>
 <script >$(function () {
@@ -74,10 +74,10 @@
     var now = new Date().getTime();
     var pa_fog_diff = 0;
     var pa_fog_maydiff = -999;
-    var pa_bri_diff = 0;
-    var pa_bri_maydiff = -999;
-    var py_bri_diff = 0;
-    var py_bri_maydiff = -999;
+    var pa_bli_diff = 0;
+    var pa_bli_maydiff = -999;
+    var py_bli_diff = 0;
+    var py_bli_maydiff = -999;
     $("tr").each(function (idx) {
       var wtime = parseInt($(this).attr("date"));
       if (wtime < now) {
@@ -104,41 +104,41 @@
         pa_fog_diff = 0;
       }
       if ($pagos.hasClass('吹雪')) {
-        if (pa_bri_diff >= 6) {
-          $pagos.addClass("brisure");
+        if (pa_bli_diff >= 6) {
+          $pagos.addClass("blisure");
           $(this).addClass("ck");
-          pa_bri_maydiff = 0;
-        } else if (pa_bri_maydiff >= 5) {
-          $pagos.addClass("brimaybe");
+          pa_bli_maydiff = 0;
+        } else if (pa_bli_maydiff >= 5) {
+          $pagos.addClass("blimaybe");
           $(this).addClass("ck");
-          pa_bri_maydiff = 0;
+          pa_bli_maydiff = 0;
         } else {
-          $pagos.addClass("brimayno");
+          $pagos.addClass("blimayno");
         }
-        pa_bri_diff = 0
+        pa_bli_diff = 0
       }
       var $pyros = $(this).children(".pyros");
       if ($pyros.hasClass('吹雪')) {
-        if (py_bri_diff >= 6) {
-          $pyros.addClass("brisure");
+        if (py_bli_diff >= 6) {
+          $pyros.addClass("blisure");
           $(this).addClass("ck");
-          py_bri_maydiff = 0;
-        } else if (py_bri_maydiff >= 5) {
-          $pyros.addClass("brimaybe");
+          py_bli_maydiff = 0;
+        } else if (py_bli_maydiff >= 5) {
+          $pyros.addClass("blimaybe");
           $(this).addClass("ck");
-          py_bri_maydiff = 0;
+          py_bli_maydiff = 0;
         } else {
-          $pyros.addClass("brimayno");
+          $pyros.addClass("blimayno");
         }
-        py_bri_diff = 0
+        py_bli_diff = 0
       }
 
       pa_fog_diff++;
       pa_fog_maydiff++;
-      pa_bri_diff++;
-      pa_bri_maydiff++;
-      py_bri_diff++;
-      py_bri_maydiff++;   
+      pa_bli_diff++;
+      pa_bli_maydiff++;
+      py_bli_diff++;
+      py_bli_maydiff++;   
 
       $(this).children(".remain").text(Math.floor((wtime - now) / 1000 / 60) + "分");
     });
@@ -149,19 +149,9 @@
     var resultWeather = [];
     for (i = 0; i < 50; i++) {
       var weather = WeatherFinder.getWeather(weatherStartTime, zone);
-      resultWeather.push([weatherStartTime, weather.name]);
+      resultWeather.push([weatherStartTime, weather]);
       weatherStartTime += 8 * 175 * 1000; // Increment by 8 Eorzean hours
     }
     return resultWeather;
-  }
-
-  function to_tr(warr, type) {
-    var html = "";
-    var prevTime;
-    warr.forEach(function (wdate) {
-      var date = new Date(wdate[0]);
-      html += '<tr date="' + date.getTime() + '" class="' + wdate[1] + '"><td class="time">' + ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) + '</td><td class="weather">' + wdate[1] + '</td><td class="remain"></td></tr>';
-    });
-    return html;
   }
 });</script>
