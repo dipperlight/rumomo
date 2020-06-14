@@ -24,7 +24,7 @@ font-weight: bold;
 background-color: #c0c0c0;
 }
 .now {
-background-color: #fa8072;
+background-color: #fa8072 !important;
 }
 .ck{
 background-color: #ecc;
